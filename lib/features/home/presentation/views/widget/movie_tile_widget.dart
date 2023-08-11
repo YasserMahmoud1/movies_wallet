@@ -68,7 +68,7 @@ class MovieTile extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Rating(),
+                        const Rating(8.0,big: false),
                         const Spacer(),
                         IconButton(
                           onPressed: () {

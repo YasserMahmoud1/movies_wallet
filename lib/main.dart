@@ -40,6 +40,33 @@ class MoviesWallet extends StatelessWidget {
             borderSide: const BorderSide(color: ColorManager.blues, width: 2),
           ),
         ),
+        textTheme: TextTheme(
+          headlineMedium: const TextStyle(
+            color: ColorManager.whites,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          headlineLarge: const TextStyle(
+            color: ColorManager.whites,
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+          headlineSmall: const TextStyle(
+            color: ColorManager.whites,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyLarge: const TextStyle(
+            color: ColorManager.whites,
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+          ),
+          bodyMedium: TextStyle(
+            color: ColorManager.whites.withOpacity(.75),
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
         useMaterial3: true,
       ),
       home: const MovieDetailsView(),

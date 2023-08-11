@@ -37,7 +37,10 @@ class MovieCard extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Rating(),
+                  child: Rating(
+                    8.0,
+                    big: false,
+                  ),
                 ),
               ),
             ),
