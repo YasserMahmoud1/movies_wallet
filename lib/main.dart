@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'features/movie_details/movie_details_view.dart';
+import 'features/see_more/see_more_view.dart';
 import 'manager.dart';
 
 void main() {
@@ -69,7 +70,7 @@ class MoviesWallet extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MovieDetailsView(),
+      home: const SeeMoreView(),
     );
   }
 }
