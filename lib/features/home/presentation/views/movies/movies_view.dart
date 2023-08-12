@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_wallet/features/see_more/presentation/view/see_more_view.dart';
 
 import '../widget/movie_card_widget.dart';
 
@@ -13,9 +14,16 @@ class MoviesView extends StatelessWidget {
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return const Padding(
+              return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
-                child: MovieCard(),
+                child: InkWell(
+                    child: MovieCard(),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeeMoreView()));
+                    }),
               );
             }),
       ),

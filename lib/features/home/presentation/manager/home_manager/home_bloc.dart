@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../views/movies/movies_view.dart';
 import '../../views/saved/saved_view.dart';
 import '../../views/search/search_view.dart';
-import '../../views/tv_shows/shows_view.dart';
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
@@ -15,7 +14,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static List<Widget> screans = [
     const MoviesView(),
-    const ShowsView(),
     const SearchView(),
     const SavedView(),
   ];
