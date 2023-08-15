@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../manager.dart';
+import 'package:movies_wallet/manager.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({Key? key}) : super(key: key);
@@ -16,22 +15,58 @@ class SearchView extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SearchField(),
-                ),
-                SizedBox(width: 24),
-                Expanded(
-                  flex: 1,
-                  child: DropDown(),
-                )
-              ],
-            ),
-          )
+            child: SearchField(),
+          ),
+          Segment(),
         ],
       ),
+    );
+  }
+}
+
+class Segment extends StatefulWidget {
+  const Segment({
+    super.key,
+  });
+
+  @override
+  State<Segment> createState() => _SegmentState();
+}
+
+class _SegmentState extends State<Segment> {
+  String selectedSegment = "Movies";
+
+  @override
+  Widget build(BuildContext context) {
+    return SegmentedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.selected)) {
+              return ColorManager.blues;
+            }
+            return Colors.transparent;
+          },
+        ),
+        side: MaterialStateProperty.all(
+            const BorderSide(color: ColorManager.lightBlacks, width: 2)),
+      ),
+      segments: const [
+        ButtonSegment(
+          label: Text("Movies"),
+          value: "Movies",
+        ),
+        ButtonSegment(
+          label: Text("Person"),
+          value: "Person",
+        ),
+      ],
+      selected: {selectedSegment},
+      onSelectionChanged: (value) {
+        setState(() {
+          selectedSegment = value.first;
+        });
+      },
     );
   }
 }
@@ -44,69 +79,15 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.red,
-          ),
-        ),
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
         hintText: "Search keyword",
-      ),
-    );
-  }
-}
-
-class DropDown extends StatefulWidget {
-  const DropDown({
-    super.key,
-  });
-
-  @override
-  State<DropDown> createState() => _DropDownState();
-}
-
-class _DropDownState extends State<DropDown> {
-  String _dropdownValue = "Multi";
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: ColorManager.lightBlacks.withOpacity(.5),
-          borderRadius: BorderRadius.circular(16)),
-      child: DropdownButtonHideUnderline(
-        child: ButtonTheme(
-          alignedDropdown: true,
-          child: DropdownButton(
-            borderRadius: BorderRadius.circular(16),
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            dropdownColor: ColorManager.lightBlacks,
-            items: const [
-              DropdownMenuItem(
-                value: "Multi",
-                child: Text("Multi"),
-              ),
-              DropdownMenuItem(
-                value: "Multi1",
-                child: Text("Multi1"),
-              ),
-              DropdownMenuItem(
-                value: "Multi2",
-                child: Text("Multi2"),
-              ),
-              DropdownMenuItem(
-                value: "Multi3",
-                child: Text("Multi3"),
-              ),
-            ],
-            value: _dropdownValue,
-            onChanged: (value) {
-              setState(() {
-                _dropdownValue = value!;
-              });
-            },
-          ),
-        ),
+        suffixIcon: IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: ColorManager.whites,
+            ),
+            onPressed: () {}),
       ),
     );
   }

@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/home/presentation/manager/home_manager/home_bloc.dart';
 import 'features/home/presentation/views/home/home_view.dart';
-import 'features/movie_details/movie_details_view.dart';
 import 'features/see_more/presentation/manager/see_more_cubit_cubit.dart';
-import 'features/see_more/presentation/view/see_more_view.dart';
 import 'manager.dart';
 
 void main() {

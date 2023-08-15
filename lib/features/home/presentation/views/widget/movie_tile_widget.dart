@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../manager.dart';
+import '../../../../movie_details/movie_details_view.dart';
 import 'rating_widget.dart';
 
 class MovieTile extends StatelessWidget {
@@ -12,13 +13,13 @@ class MovieTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("see the saved movie details");
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MovieDetailsView()));
       },
       customBorder:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: ColorManager.lightBlacks.withOpacity(.5),
           borderRadius: BorderRadius.circular(24),
@@ -30,56 +31,61 @@ class MovieTile extends StatelessWidget {
               Container(
                 height: 150,
                 width: 100,
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
                     image: NetworkImage(
                       "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
                     ),
                   ),
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      bottomLeft: Radius.circular(24)),
                 ),
               ),
-              const SizedBox(width: 16),
               Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                      width: double.infinity / 2,
-                      child: Text(
-                        "The Godfather",
-                        style: TextStyle(
-                          fontSize: 24,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.whites,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 40,
+                        width: double.infinity / 2,
+                        child: Text(
+                          "The Godfather",
+                          style: TextStyle(
+                            fontSize: 24,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                            color: ColorManager.whites,
+                          ),
+                          maxLines: 2,
                         ),
-                        maxLines: 2,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "1972-03-14".substring(0, 4),
-                      style: TextStyle(
-                          color: ColorManager.whites.withOpacity(.75),),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        const Rating(8.0,big: false),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            print("remove from saved");
-                          },
-                          icon: const Icon(Icons.bookmark,
-                              color: ColorManager.blues),
+                      const SizedBox(height: 8),
+                      Text(
+                        "1972-03-14".substring(0, 4),
+                        style: TextStyle(
+                          color: ColorManager.whites.withOpacity(.75),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Rating(8.0, big: false),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              print("remove from saved");
+                            },
+                            icon: const Icon(Icons.bookmark,
+                                color: ColorManager.blues, size: 32),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],

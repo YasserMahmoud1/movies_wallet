@@ -44,12 +44,27 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned.fill(
+            Positioned.fill(
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Tony Stark"),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Tony Stark",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(height: 4),
+                      Text("2018",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white.withOpacity(0.5))),
+                    ],
+                  ),
                 ),
               ),
             ),

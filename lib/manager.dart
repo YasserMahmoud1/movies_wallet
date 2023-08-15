@@ -32,7 +32,7 @@ class GenreManager {
   };
 
   static int getGenreByName(String name) {
-    return _genres.keys.firstWhere((element) => _genres[element] == name)??0;
+    return _genres.keys.firstWhere((element) => _genres[element] == name);
   }
 
   static String getGenreByID(int? id) {
