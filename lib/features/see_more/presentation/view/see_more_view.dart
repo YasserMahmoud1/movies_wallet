@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_wallet/manager.dart';
 
-import '../../../widgets/movie_tile_widget.dart';
+// import '../../../widgets/movie_tile_widget.dart';
 import '../manager/see_more_cubit_cubit.dart';
 
 class SeeMoreView extends StatefulWidget {
@@ -56,12 +56,12 @@ class _SeeMoreViewState extends State<SeeMoreView> {
               ),
             ],
           ),
-          body: const Center(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: MovieTile(),
-            ),
-          ),
+          // body: const Center(
+          //   child: Padding(
+          //     padding: EdgeInsets.all(16),
+          //     child: MovieTile(),
+          //   ),
+          // ),
         );
       },
     );

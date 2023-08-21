@@ -1,24 +1,29 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_wallet/core/functions/go_to_movie_details.dart';
 
 import '../../manager.dart';
-import '../movie_details/presentation/movie_details_view.dart';
+import '../movie_details/data/models/movie_model.dart';
+// import '../movie_details/presentation/movie_details_view.dart';
 import 'rating_widget.dart';
 
 class MovieTile extends StatelessWidget {
-  const MovieTile({
+  const MovieTile(
+    this._movie, {
     super.key,
+    required this.isSearch,
+    // required this.isMovie,
   });
-
+  // final bool isMovie;
+  final bool isSearch;
+  final Movie _movie;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MovieDetailsView()));
+          goToMovieDetails(context);
         },
         customBorder:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -35,13 +40,15 @@ class MovieTile extends StatelessWidget {
                 Container(
                   height: 150,
                   width: 100,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+                      image: CachedNetworkImageProvider(
+                        _movie.posterPath == ''
+                            ? "https://craftypixels.com/placeholder-image/500x750/393e46/eeeeee&text=Place+Holder"
+                            : "https://image.tmdb.org/t/p/w500${_movie.posterPath}",
                       ),
                     ),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(24),
                         bottomLeft: Radius.circular(24)),
                   ),
@@ -53,23 +60,23 @@ class MovieTile extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           height: 40,
                           width: double.infinity / 2,
                           child: Text(
-                            "The Godfather",
-                            style: TextStyle(
+                            _movie.title,
+                            style: const TextStyle(
                               fontSize: 24,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.bold,
                               color: ColorManager.whites,
                             ),
-                            maxLines: 2,
+                            maxLines: 1,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "1972-03-14".substring(0, 4),
+                          _movie.releaseDate.substring(0, 4),
                           style: TextStyle(
                             color: ColorManager.whites.withOpacity(.75),
                           ),
@@ -77,15 +84,16 @@ class MovieTile extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Rating(8.0),
+                            Rating(_movie.voteAverage),
                             const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                print("remove from saved");
-                              },
-                              icon: const Icon(Icons.bookmark,
-                                  color: ColorManager.blues, size: 32),
-                            ),
+                            if (!isSearch)
+                              IconButton(
+                                onPressed: () {
+                                  print("remove from saved");
+                                },
+                                icon: const Icon(Icons.bookmark,
+                                    color: ColorManager.blues, size: 32),
+                              ),
                           ],
                         ),
                       ],

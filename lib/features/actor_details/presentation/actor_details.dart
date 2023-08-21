@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/movie_tile_widget.dart';
+// import '../../widgets/movie_tile_widget.dart';
 
 class ActorDetails extends StatelessWidget {
   const ActorDetails({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class ActorDetails extends StatelessWidget {
                     child: Text("Movies of the actor:",
                         style: Theme.of(context).textTheme.headlineMedium),
                   ),
-                  for (int i = 0; i < 15; i++) const MovieTile()
+                  // for (int i = 0; i < 15; i++) const MovieTile()
                 ],
               )
             ],

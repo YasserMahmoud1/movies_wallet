@@ -16,7 +16,7 @@ class Actor
       json['id'],
       json['name'],
       json['profile_path'] ?? '',
-      json['character'],
+      json['character'] ?? '',
       null,
     );
   }

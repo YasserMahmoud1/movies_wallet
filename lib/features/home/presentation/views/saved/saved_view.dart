@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../widgets/movie_tile_widget.dart';
+// import '../../../../widgets/movie_tile_widget.dart';
 
 class SavedView extends StatelessWidget {
   const SavedView({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class SavedMoviesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: MovieTile(),
+      // child: MovieTile(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movies_wallet/core/utils/api_service.dart';
 import 'package:movies_wallet/features/home/data/repos/home_repo/home_repo_imp.dart';
+import 'package:movies_wallet/features/home/data/repos/search_repos/search_repo_impl.dart';
 
 final getIt = GetIt.instance;
 
@@ -10,6 +11,9 @@ void setup() {
 
   getIt.registerFactory<HomeRepoImpl>(()=>
     HomeRepoImpl(getIt.get<ApiService>()),
+  );
+  getIt.registerFactory<SearchRepoImpl>(()=>
+    SearchRepoImpl(getIt.get<ApiService>()),
   );
 
 
