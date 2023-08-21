@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:movies_wallet/features/home/presentation/views/widget/rating_widget.dart';
+import 'package:movies_wallet/features/widgets/rating_widget.dart';
 
 class MovieDetailsCard extends StatelessWidget {
   const MovieDetailsCard({
     super.key,
     required this.poster,
     required this.actorName,
-    required this.actorRole,
     required this.isMovie,
+    this.actorRole,
     this.rating,
   });
 
   final String poster;
   final String actorName;
-  final String actorRole;
+  final String? actorRole;
   final bool isMovie;
   final double? rating;
 
@@ -41,15 +41,28 @@ class MovieDetailsCard extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: const EdgeInsets.all(4),
-                    child: Rating(rating ?? 0,big: false),
+                    child: Rating(rating ?? 0),
                   ),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: 8),
-        Text(actorName),
-        Text(actorRole),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 8, bottom: 4),
+          child: SizedBox(
+            width: 125,
+            child: Text(
+              actorName,
+              style: Theme.of(context).textTheme.bodyLarge,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        if (!isMovie)
+          Text("(${actorRole ?? " "})",
+              style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_wallet/manager.dart';
 
-import '../../../home/presentation/views/widget/movie_tile_widget.dart';
+import '../../../widgets/movie_tile_widget.dart';
 import '../manager/see_more_cubit_cubit.dart';
 
 class SeeMoreView extends StatefulWidget {

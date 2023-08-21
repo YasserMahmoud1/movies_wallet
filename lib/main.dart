@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_wallet/features/home/presentation/manager/movies_manager/movie_cubit/cubit/movie_cubit.dart';
 
+import 'core/utils/service_locator.dart';
 import 'features/home/presentation/manager/home_manager/home_bloc.dart';
 import 'features/home/presentation/views/home/home_view.dart';
 import 'features/see_more/presentation/manager/see_more_cubit_cubit.dart';
 import 'manager.dart';
 
 void main() {
+  setup();
   runApp(const MoviesWallet());
 }
 
@@ -17,13 +20,13 @@ class MoviesWallet extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-          BlocProvider<SeeMoreCubit>(
-            create: (context) => SeeMoreCubit(),
-          ),
-          BlocProvider<HomeCubit>(
-            create: (context) => HomeCubit(),
-          ),
-
+        BlocProvider<SeeMoreCubit>(
+          create: (context) => SeeMoreCubit(),
+        ),
+        BlocProvider<HomeCubit>(
+          create: (context) => HomeCubit(),
+        ),
+        BlocProvider(create: (context) => MovieCubit()..getMoviesData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -66,7 +69,7 @@ class MoviesWallet extends StatelessWidget {
             ),
             headlineSmall: const TextStyle(
               color: ColorManager.whites,
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
             bodyLarge: const TextStyle(
@@ -82,7 +85,7 @@ class MoviesWallet extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: HomeView(),
+        home: const HomeView(),
       ),
     );
   }
