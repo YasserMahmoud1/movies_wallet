@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../manager.dart';
+
 class MovieDetailsMoviePoster extends StatelessWidget {
-  const MovieDetailsMoviePoster({
+  const MovieDetailsMoviePoster(this.poster,{
     super.key,
-    required this.poster,
   });
 
   final String poster;
@@ -12,12 +13,12 @@ class MovieDetailsMoviePoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
-      height: 225,
+      width: ConstManager.movieDetailsPosterWidth,
+      height: ConstManager.movieDetailsPosterHeight,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ConstManager.universalBorderRadius),
         image: DecorationImage(
-          image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500$poster"),
+          image: CachedNetworkImageProvider("${ConstManager.posterURlPrefix}$poster"),
         ),
       ),
     );

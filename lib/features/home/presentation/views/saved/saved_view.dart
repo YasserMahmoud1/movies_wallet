@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_wallet/features/home/presentation/manager/saved_manager/cubit/saved_cubit.dart';
+
+import '../../../../widgets/movie_tile_widget.dart';
 
 // import '../../../../widgets/movie_tile_widget.dart';
 
@@ -7,25 +11,30 @@ class SavedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SavedCubit.get(context).getData();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saved'),
         centerTitle: true,
       ),
-      body: SavedMoviesTab(),
-    );
-  }
-}
-
-class SavedMoviesTab extends StatelessWidget {
-  const SavedMoviesTab({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      // child: MovieTile(),
+      body: BlocBuilder<SavedCubit, SavedState>(
+        builder: (context, state) {
+          if (state is SavedSuccess) {
+            if (state.movies.isEmpty) {
+              return const Center(child: Text('No movies saved'));
+            } else {
+              return ListView.builder(
+                itemCount: state.movies.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MovieTile(state.movies[index]);
+                },
+              );
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }

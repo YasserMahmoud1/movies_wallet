@@ -11,11 +11,9 @@ class MovieTile extends StatelessWidget {
   const MovieTile(
     this._movie, {
     super.key,
-    required this.isSearch,
     // required this.isMovie,
   });
   // final bool isMovie;
-  final bool isSearch;
   final Movie _movie;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class MovieTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () {
-          goToMovieDetails(context);
+          goToMovieDetails(context, _movie);
         },
         customBorder:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -44,8 +42,8 @@ class MovieTile extends StatelessWidget {
                     image: DecorationImage(
                       image: CachedNetworkImageProvider(
                         _movie.posterPath == ''
-                            ? "https://craftypixels.com/placeholder-image/500x750/393e46/eeeeee&text=Place+Holder"
-                            : "https://image.tmdb.org/t/p/w500${_movie.posterPath}",
+                            ? ConstManager.placeHolderPosterURL
+                            : "${ConstManager.posterURlPrefix}${_movie.posterPath}",
                       ),
                     ),
                     borderRadius: const BorderRadius.only(
@@ -76,7 +74,9 @@ class MovieTile extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          _movie.releaseDate.substring(0, 4),
+                          _movie.releaseDate == ""
+                              ? "Unknown"
+                              : _movie.releaseDate.substring(0, 4),
                           style: TextStyle(
                             color: ColorManager.whites.withOpacity(.75),
                           ),
@@ -86,7 +86,6 @@ class MovieTile extends StatelessWidget {
                           children: [
                             Rating(_movie.voteAverage),
                             const Spacer(),
-                            if (!isSearch)
                               IconButton(
                                 onPressed: () {
                                   print("remove from saved");

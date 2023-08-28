@@ -17,7 +17,8 @@ class AppBarWithBackDrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.width * 9 / 16,
+      expandedHeight: MediaQuery.of(context).size.width *
+          ConstManager.backdropHeightToWidthRation,
       floating: false,
       pinned: true,
       centerTitle: true,
@@ -35,11 +36,12 @@ class AppBarWithBackDrop extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width * 9 / 16,
+              height: MediaQuery.of(context).size.width *
+                  ConstManager.backdropHeightToWidthRation,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://image.tmdb.org/t/p/w500$backDropID"),
+                      "${ConstManager.backdropURlPrefix}$backDropID"),
                 ),
               ),
             ),

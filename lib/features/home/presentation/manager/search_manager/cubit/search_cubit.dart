@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../movie_details/data/models/movie_model.dart';
-import '../../../../data/repos/search_repos/search_repo.dart';
+import '../../../../data/repos/search_repo/search_repo.dart';
 
 part 'search_state.dart';
 

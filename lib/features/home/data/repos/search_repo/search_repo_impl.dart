@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:movies_wallet/core/errors/failure.dart';
 import 'package:movies_wallet/core/utils/api_service.dart';
 // import 'package:movies_wallet/features/actor_details/data/models/actor_model.dart';
-import 'package:movies_wallet/features/home/data/repos/search_repos/search_repo.dart';
+import 'package:movies_wallet/features/home/data/repos/search_repo/search_repo.dart';
 import 'package:movies_wallet/features/movie_details/data/models/movie_model.dart';
 
 class SearchRepoImpl implements SearchRepo {

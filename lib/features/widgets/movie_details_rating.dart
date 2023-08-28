@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'movie_card_with_opacity.dart';
+import '../../manager.dart';
+import 'move_details_card_with_obacity.dart';
 
 class MovieDetailsRating extends StatelessWidget {
-  const MovieDetailsRating({
+  const MovieDetailsRating(
+    this.movieRating,{
     super.key,
-    required this.movieRating,
   });
 
   final double movieRating;
@@ -15,6 +16,7 @@ class MovieDetailsRating extends StatelessWidget {
     return Expanded(
       child: MovieDetailsCardWithOpacity(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Rating:",
@@ -29,12 +31,19 @@ class MovieDetailsRating extends StatelessWidget {
                   color: Colors.amber,
                   size: 48,
                 ),
-                const SizedBox(width: 4),
-                Text(
-                  movieRating.toStringAsFixed(1),
-                  style: Theme.of(context).textTheme.headlineLarge,
+                
+                Padding(
+                  padding: const EdgeInsets.only(left: ConstManager.universalPadding4),
+                  child: Text(
+                    movieRating.toStringAsFixed(1),
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: ConstManager.universalPadding4),
+              child: Text("(500000)"),
             ),
           ],
         ),

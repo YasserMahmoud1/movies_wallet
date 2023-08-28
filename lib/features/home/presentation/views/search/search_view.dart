@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_wallet/core/utils/service_locator.dart';
-import 'package:movies_wallet/features/home/data/repos/search_repos/search_repo_impl.dart';
+import 'package:movies_wallet/features/home/data/repos/search_repo/search_repo_impl.dart';
 // import 'package:movies_wallet/manager.dart';
 
 import '../../../../widgets/movie_tile_widget.dart';
@@ -55,7 +55,7 @@ class ResultList extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.movies.length,
               itemBuilder: (context, index) {
-                return MovieTile(state.movies[index], isSearch: true);
+                return MovieTile(state.movies[index]);
               },
             );
           } else {

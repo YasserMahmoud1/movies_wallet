@@ -5,17 +5,20 @@ import 'package:movies_wallet/features/movie_details/data/models/movie_model.dar
 
 import 'actor_repo.dart';
 
-class ActorRepoImp implements ActorRepo {
+class ActorRepoImpl implements ActorRepo {
   final ApiService _apiService;
 
-  ActorRepoImp(this._apiService);
+  ActorRepoImpl(this._apiService);
 
   @override
-  Future<Either<Failure, List<Movie>>> getActorMovies(int actorId) async{
-    try{
-      var response = await _apiService.get(endPoint: 'person/$actorId/movie_credits');
-      return Right(response['cast'].map<Movie>((movie) => Movie.fromJSON(movie)).toList());
-    }catch(e){
+  Future<Either<Failure, List<Movie>>> getActorMovies(int actorId) async {
+    try {
+      var response =
+          await _apiService.get(endPoint: 'person/$actorId/movie_credits?');
+      return Right(response['cast']
+          .map<Movie>((movie) => Movie.fromJSON(movie))
+          .toList());
+    } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }

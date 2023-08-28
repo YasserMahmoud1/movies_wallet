@@ -16,13 +16,13 @@ class MovieDetailsMovieTitle extends StatelessWidget {
       fit: BoxFit.fitHeight,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: ConstManager.universalPadding8),
         decoration: BoxDecoration(
-          color: ColorManager.lightBlacks.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(16),
+          color: ColorManager.lightBlacks.withOpacity(ConstManager.movieDetailsCardOpacity),
+          borderRadius: BorderRadius.circular(ConstManager.universalBorderRadius),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: ConstManager.universalPadding16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -31,11 +31,14 @@ class MovieDetailsMovieTitle extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 4),
-              Text(
-                movieName,
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+              
+              Padding(
+                padding: const EdgeInsets.only(top: ConstManager.universalPadding4),
+                child: Text(
+                  movieName,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'movie_card_with_opacity.dart';
+import 'move_details_card_with_obacity.dart';
 
 class MovieDetailsReleaseDate extends StatelessWidget {
   const MovieDetailsReleaseDate({

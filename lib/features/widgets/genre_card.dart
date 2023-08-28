@@ -3,27 +3,31 @@ import 'package:flutter/material.dart';
 import '../../manager.dart';
 
 class GenreCard extends StatelessWidget {
-  const GenreCard({
+  const GenreCard(
+    this.genre, {
     super.key,
-    required this.genre,
   });
+
   final String genre;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(ConstManager.genreCardAllPadding),
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: Container(
-          height: 32,
+          height: ConstManager.genreCardHeight,
           decoration: BoxDecoration(
             color: ColorManager.whites,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius:
+                BorderRadius.circular(ConstManager.universalBorderRadius),
           ),
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: ConstManager.genreCardTextHorizontalPadding),
               child: Text(
                 genre,
                 style: Theme.of(context)

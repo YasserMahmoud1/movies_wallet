@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_wallet/manager.dart';
 
 import '../movie_details/data/models/movie_model.dart';
 import 'rating_widget.dart';
@@ -14,19 +15,17 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(ConstManager.universalBorderRadius),
       child: SizedBox(
-        height: 240,
-        width: 160,
+        height: ConstManager.homeMovieCardHeight,
+        width: ConstManager.homeMovieCardWidth,
         child: Stack(
           children: [
             Container(
-              height: 300,
-              width: 200,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: CachedNetworkImageProvider(
-                          "https://image.tmdb.org/t/p/w500${_movie.posterPath}"))),
+                          "${ConstManager.posterURlPrefix}${_movie.posterPath}"))),
               child: Container(
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
@@ -40,7 +39,8 @@ class MovieCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(
+                      ConstManager.homeMovieCardRatingPadding),
                   child: Rating(_movie.voteAverage),
                 ),
               ),
@@ -49,7 +49,7 @@ class MovieCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(ConstManager.universalPadding4),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class MovieCard extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
-                              ?.copyWith(color: Colors.white.withOpacity(0.5))),
+                              ?.copyWith(color: Colors.white.withOpacity(ConstManager.movieDetailsCardOpacity))),
                     ],
                   ),
                 ),
