@@ -17,13 +17,19 @@ class YoutubeWidget extends StatelessWidget {
       child: BlocBuilder<TrailerCubit, TrailerState>(
         builder: (context, state) {
           if (state is TrailerSuccess) {
-            return YoutubePlayer(
-              controller: YoutubePlayerController.fromVideoId(
-                videoId: state.trailerID,
-                autoPlay: false,
-                params: const YoutubePlayerParams(showFullscreenButton: false),
-              ),
-            );
+            if(state.trailerID == "NO TRAILER"){
+              return Center(child: Text("No Trailer Available"));
+            }
+            else{
+                          return YoutubePlayer(
+                controller: YoutubePlayerController.fromVideoId(
+                  videoId: state.trailerID,
+                  autoPlay: false,
+                  params:
+                      const YoutubePlayerParams(showFullscreenButton: false),
+                ),
+              );
+            }
           } else {
             return Center(child: CircularProgressIndicator());
           }

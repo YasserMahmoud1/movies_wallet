@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_wallet/core/functions/go_to_movie_details.dart';
 import 'package:movies_wallet/features/widgets/rating_widget.dart';
 
 import '../../core/functions/go_to_actor_details.dart';
@@ -9,32 +10,36 @@ import '../movie_details/data/models/movie_model.dart';
 class MovieDetailsMovieCard extends StatelessWidget {
   const MovieDetailsMovieCard(
     this.movie, {
-    super.key, 
+    super.key,
   });
 
   final Movie movie;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            Container(
-              height: ConstManager.movieDetailsMovieCardHeight,
-              width: ConstManager.movieDetailsMovieCardWidth,
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(ConstManager.universalBorderRadius),
-                image: DecorationImage(
-                  image: NetworkImage(
-                    movie.posterPath == ''?
-                    ConstManager.placeHolderPosterURL:
-                    "${ConstManager.posterURlPrefix}${movie.posterPath}",
+    return InkWell(
+      onTap: () {
+        goToMovieDetails(context, movie);
+      },
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: ConstManager.movieDetailsMovieCardHeight,
+                width: ConstManager.movieDetailsMovieCardWidth,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(ConstManager.universalBorderRadius),
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      movie.posterPath == ''
+                          ? ConstManager.placeHolderPosterURL
+                          : "${ConstManager.posterURlPrefix}${movie.posterPath}",
+                    ),
                   ),
                 ),
               ),
-            ),
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.topRight,
@@ -45,24 +50,25 @@ class MovieDetailsMovieCard extends StatelessWidget {
                   ),
                 ),
               ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(
-              top: ConstManager.universalPadding8,
-              bottom: ConstManager.universalPadding4),
-          child: SizedBox(
-            width: ConstManager.movieDetailsMovieCardWidth,
-            child: Text(
-              movie.title,
-              style: Theme.of(context).textTheme.bodyLarge,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                top: ConstManager.universalPadding8,
+                bottom: ConstManager.universalPadding4),
+            child: SizedBox(
+              width: ConstManager.movieDetailsMovieCardWidth,
+              child: Text(
+                movie.title,
+                style: Theme.of(context).textTheme.bodyLarge,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -70,7 +76,7 @@ class MovieDetailsMovieCard extends StatelessWidget {
 class MovieDetailsActorCard extends StatelessWidget {
   const MovieDetailsActorCard(
     this.actor, {
-    super.key, 
+    super.key,
   });
 
   final Actor actor;
@@ -80,7 +86,7 @@ class MovieDetailsActorCard extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: (){
+          onTap: () {
             goToActorDetails(context, actor);
           },
           child: Container(
@@ -91,9 +97,9 @@ class MovieDetailsActorCard extends StatelessWidget {
                   BorderRadius.circular(ConstManager.universalBorderRadius),
               image: DecorationImage(
                 image: NetworkImage(
-                  actor.profilePathID == ''?
-                  ConstManager.placeHolderPosterURL:
-                  "${ConstManager.posterURlPrefix}${actor.profilePathID}",
+                  actor.profilePathID == ''
+                      ? ConstManager.placeHolderPosterURL
+                      : "${ConstManager.posterURlPrefix}${actor.profilePathID}",
                 ),
               ),
             ),
@@ -114,8 +120,15 @@ class MovieDetailsActorCard extends StatelessWidget {
             ),
           ),
         ),
-          Text("(${actor.character})",
-              style: Theme.of(context).textTheme.bodyMedium),
+        SizedBox(
+          width: ConstManager.movieDetailsMovieCardWidth,
+          child: Text(
+            "(${actor.character})",
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+          ),
+        ),
       ],
     );
   }

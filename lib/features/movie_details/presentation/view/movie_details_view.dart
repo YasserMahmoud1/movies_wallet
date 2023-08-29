@@ -30,8 +30,6 @@ class MovieDetailsView extends StatefulWidget {
 }
 
 class _MovieDetailsViewState extends State<MovieDetailsView> {
-
-
   bool lastStatus = true;
   late ScrollController _scrollController;
 
@@ -77,103 +75,171 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 24,
-                    ),
-                    child: Column(
-                      children: [
-                        MovieDetailsMovieTitle(movieName: widget.movie.title),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            children: [
-                              MovieDetailsMoviePoster(widget.movie.posterPath),
-                              const SizedBox(width: 16),
-                              SizedBox(
-                                height: 225,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    MovieDetailsRating(
-                                        widget.movie.voteAverage),
-                                    const SizedBox(height: 16),
-                                    MovieDetailsReleaseDate(
-                                        releaseDate: widget.movie.releaseDate),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        MovieDetailsButton(widget.movie),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Genres",
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            children: [
-                              for (int i = 0;
-                                  i < widget.movie.genreID.length;
-                                  i++)
-                                GenreCard(GenreManager.getGenreByID(
-                                    widget.movie.genreID[i])),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            "Overview",
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              widget.movie.overview,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            "Trailer",
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          YoutubeWidget(widget.movie.id),
-                          const SizedBox(height: 24),
-                          Text(
-                            "Cast",
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          Credits(widget.movie.id),
-                          Text(
-                            "Recommended Movies",
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: 8),
-                          Recommendations(widget.movie.id),
-                        ],
-                      ),
-                    ),
+                  Column(
+                    children: [
+                      MovieDetailsUpperCards(widget.movie),
+                      MovieDetailsLowerCards(widget.movie),
+                    ],
                   ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MovieDetailsLowerCards extends StatelessWidget {
+  const MovieDetailsLowerCards(
+    this.movie, {
+    super.key,
+  });
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Genres",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          const SizedBox(height: 8),
+          MovieDetailsGenresWrap(movie: movie),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Overview",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                top: 8, bottom: 24, start: 16, end: 16),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                movie.overview,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Trailer",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                top: 8, bottom: 24, start: 16, end: 16),
+            child: YoutubeWidget(movie.id),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Cast",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(top: 8, bottom: 24),
+            child: Credits(movie.id),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Recommended Movies",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(top: 8, bottom: 24),
+            child: Recommendations(movie.id),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MovieDetailsGenresWrap extends StatelessWidget {
+  const MovieDetailsGenresWrap({
+    super.key,
+    required this.movie,
+  });
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 24, start: 16, end: 16),
+      child: Wrap(
+        children: [
+          for (int i = 0; i < movie.genreID.length; i++)
+            GenreCard(GenreManager.getGenreByID(movie.genreID[i])),
+        ],
+      ),
+    );
+  }
+}
+
+class MovieDetailsUpperCards extends StatelessWidget {
+  const MovieDetailsUpperCards(
+    this.movie, {
+    super.key,
+  });
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 24,
+      ),
+      child: Column(
+        children: [
+          MovieDetailsMovieTitle(movieName: movie.title),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              children: [
+                MovieDetailsMoviePoster(movie.posterPath),
+                const SizedBox(width: 16),
+                SizedBox(
+                  height: 225,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MovieDetailsRating(
+                        movieRating: movie.voteAverage,
+                        numberOfVotes: movie.numberOfVotes,
+                      ),
+                      const SizedBox(height: 16),
+                      MovieDetailsReleaseDate(releaseDate: movie.releaseDate),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          MovieDetailsButton(movie),
+        ],
       ),
     );
   }
@@ -189,7 +255,8 @@ class MovieDetailsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // IsSavedCubit.get(context).isSaved(movie.id);
     return BlocProvider(
-      create: (context) => IsSavedCubit(getIt.get<SavedRepoImpl>())..isSaved(movie.id),
+      create: (context) =>
+          IsSavedCubit(getIt.get<SavedRepoImpl>())..isSaved(movie.id),
       child: BlocBuilder<IsSavedCubit, IsSavedState>(
         builder: (context, state) {
           if (state is IsSavedSuccess) {
@@ -231,7 +298,7 @@ class MovieDetailsButton extends StatelessWidget {
               ),
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -254,16 +321,26 @@ class Credits extends StatelessWidget {
       child: BlocBuilder<CreditCubit, CreditState>(
         builder: (context, state) {
           if (state is CreditSuccess) {
-            return SizedBox(
-              height: 250,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: state.actors.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MovieDetailsActorCard(state.actors[index]);
-                },
-              ),
-            );
+            if (state.actors.isNotEmpty) {
+              return SizedBox(
+                height: 250,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    const SizedBox(width: 16),
+                    for (int i = 0; i < state.actors.length; i++)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 8.0),
+                        child: MovieDetailsActorCard(state.actors[i]),
+                      ),
+                    const SizedBox(width: 8),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: Text("No Cast available"));
+            }
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -288,16 +365,28 @@ class Recommendations extends StatelessWidget {
       child: BlocBuilder<RecommendationsCubit, RecommendationsState>(
         builder: (context, state) {
           if (state is RecommendationsSuccess) {
-            return SizedBox(
-              height: 250,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: state.movies.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MovieDetailsMovieCard(state.movies[index]);
-                },
-              ),
-            );
+            if (state.movies.isNotEmpty) {
+              return SizedBox(
+                height: 250,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    const SizedBox(width: 16),
+                    for (int i = 0; i < state.movies.length; i++)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 8.0),
+                        child: MovieDetailsMovieCard(state.movies[i]),
+                      ),
+                    const SizedBox(width: 8),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text("No Recommendations available"),
+              );
+            }
           } else {
             return const Center(child: CircularProgressIndicator());
           }

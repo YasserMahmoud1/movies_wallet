@@ -16,14 +16,16 @@ class NowInTheatersMovieCubit extends Cubit<NowInTheatersMovieCubitState> {
     getIt.get<HomeRepoImpl>(),
   );
 
-  factory NowInTheatersMovieCubit(HomeRepoImpl homeRepoImpl) => _internal;
+  factory NowInTheatersMovieCubit() => _internal;
   
 
   final HomeRepo _homeRepo;
+
   Future<void> getNowInTheatersMovies() async {
     var result = await _homeRepo.getNowInTheatersMovies();
     result.fold(
       (failure) {
+        print(failure.errMessage);
         emit(NowInTheatersFailure(failure.errMessage));
       },
       (movie) {

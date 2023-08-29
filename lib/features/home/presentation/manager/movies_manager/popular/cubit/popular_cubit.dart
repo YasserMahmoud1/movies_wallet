@@ -15,7 +15,7 @@ class PopularMoviesCubit extends Cubit<PopularState> {
     getIt.get<HomeRepoImpl>(),
   );
 
-  factory PopularMoviesCubit(HomeRepoImpl homeRepoImpl) => _internal;
+  factory PopularMoviesCubit() => _internal;
 
   final HomeRepo _homeRepo;
 
@@ -23,6 +23,7 @@ class PopularMoviesCubit extends Cubit<PopularState> {
     var result = await _homeRepo.getPopularMovies();
     result.fold(
       (failure) {
+        print(failure.errMessage);
         emit(PopularFailure(failure.errMessage));
       },
       (movie) {

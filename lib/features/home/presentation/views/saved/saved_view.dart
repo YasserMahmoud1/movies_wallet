@@ -24,9 +24,10 @@ class SavedView extends StatelessWidget {
               return const Center(child: Text('No movies saved'));
             } else {
               return ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: state.movies.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return MovieTile(state.movies[index]);
+                  return MovieTile(state.movies[index], isSaved: true);
                 },
               );
             }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../manager.dart';
@@ -40,8 +41,11 @@ class AppBarWithBackDrop extends StatelessWidget {
                   ConstManager.backdropHeightToWidthRation,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "${ConstManager.backdropURlPrefix}$backDropID"),
+                  image: CachedNetworkImageProvider(
+                    backDropID == ''
+                        ? ConstManager.placeHolderBackdropURL
+                        : "${ConstManager.backdropURlPrefix}$backDropID",
+                  ),
                 ),
               ),
             ),

@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/functions/go_to_more_movies.dart';
 import '../../core/functions/go_to_movie_details.dart';
-import '../../core/utils/service_locator.dart';
 import '../../manager.dart';
-import '../home/data/repos/home_repo/home_repo_imp.dart';
+
 import '../home/presentation/manager/movies_manager/trending/cubit/trending_movies_cubit.dart';
 import 'home_movie_card_widget.dart';
 
@@ -17,7 +16,7 @@ class TrendingMovies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TrendingMoviesCubit(getIt.get<HomeRepoImpl>()),
+      create: (context) => TrendingMoviesCubit(),
       child: BlocBuilder<TrendingMoviesCubit, TrendingMoviesState>(
         builder: (context, state) {
           if (state is TrendingMoviesSuccess) {

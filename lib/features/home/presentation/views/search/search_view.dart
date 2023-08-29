@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_wallet/core/utils/service_locator.dart';
 import 'package:movies_wallet/features/home/data/repos/search_repo/search_repo_impl.dart';
 // import 'package:movies_wallet/manager.dart';
 
+import '../../../../../manager.dart';
 import '../../../../widgets/movie_tile_widget.dart';
 import '../../manager/search_manager/cubit/search_cubit.dart';
 
@@ -22,12 +21,13 @@ class SearchView extends StatelessWidget {
           centerTitle: true,
         ),
         body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverList(
               delegate: SliverChildListDelegate(
                 [
                   const SearchField(),
-                  // const Segment(),
+                  const Segment(),
                   const ResultList(),
                 ],
               ),
@@ -55,12 +55,23 @@ class ResultList extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.movies.length,
               itemBuilder: (context, index) {
-                return MovieTile(state.movies[index]);
+                return MovieTile(state.movies[index], isSaved: false);
               },
             );
           } else {
             return const Center(child: Text("No results found"));
           }
+        } else if (state is SearchActorSuccess) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: state.actors.length,
+            itemBuilder: (context, index) {
+              return ActorTile(state.actors[index], isSaved: false);
+            },
+          );
+        } else if (state is SearchActorLoading) {
+          return const Center(child: CircularProgressIndicator());
         } else if (state is SearchLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SearchFailure) {
@@ -74,51 +85,51 @@ class ResultList extends StatelessWidget {
   }
 }
 
-// class Segment extends StatelessWidget {
-//   const Segment({
-//     super.key,
-//   });
+class Segment extends StatelessWidget {
+  const Segment({
+    super.key,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<SearchCubit, SearchState>(
-//       builder: (context, state) {
-//         return Padding(
-//           padding: const EdgeInsetsDirectional.only(
-//               end: 40, start: 40, top: 8, bottom: 24),
-//           child: SegmentedButton(
-//             style: ButtonStyle(
-//               backgroundColor: MaterialStateProperty.resolveWith<Color>(
-//                 (Set<MaterialState> states) {
-//                   if (states.contains(MaterialState.selected)) {
-//                     return ColorManager.blues;
-//                   }
-//                   return Colors.transparent;
-//                 },
-//               ),
-//               side: MaterialStateProperty.all(
-//                   const BorderSide(color: ColorManager.lightBlacks, width: 2)),
-//             ),
-//             segments: const [
-//               ButtonSegment(
-//                 label: Text("Movies"),
-//                 value: "Movies",
-//               ),
-//               ButtonSegment(
-//                 label: Text("Person"),
-//                 value: "Person",
-//               ),
-//             ],
-//             selected: {SearchCubit.get(context).selectedSegment},
-//             onSelectionChanged: (value) {
-//               SearchCubit.get(context).changeSegment(value.first);
-//             },
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsetsDirectional.only(
+              end: 40, start: 40, top: 8, bottom: 24),
+          child: SegmentedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return ColorManager.blues;
+                  }
+                  return Colors.transparent;
+                },
+              ),
+              side: MaterialStateProperty.all(
+                  const BorderSide(color: ColorManager.lightBlacks, width: 2)),
+            ),
+            segments: const [
+              ButtonSegment(
+                label: Text("Movies"),
+                value: "Movies",
+              ),
+              ButtonSegment(
+                label: Text("Person"),
+                value: "Person",
+              ),
+            ],
+            selected: {SearchCubit.get(context).selectedSegment},
+            onSelectionChanged: (value) {
+              SearchCubit.get(context).changeSegment(value.first);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
 
 class SearchField extends StatelessWidget {
   const SearchField({
@@ -131,14 +142,17 @@ class SearchField extends StatelessWidget {
       padding: const EdgeInsetsDirectional.only(
           end: 16, start: 16, top: 24, bottom: 8),
       child: TextFormField(
+        controller: SearchCubit.get(context).searchController,
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Search keyword",
         ),
         onChanged: (value) {
-          Timer(const Duration(seconds: 1), () {
+          if (SearchCubit.get(context).selectedSegment == "Movies") {
             SearchCubit.get(context).searchMovie(value);
-          });
+          } else {
+            SearchCubit.get(context).searchActor(value);
+          }
         },
       ),
     );

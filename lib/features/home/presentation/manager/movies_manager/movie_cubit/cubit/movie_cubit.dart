@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:movies_wallet/core/utils/service_locator.dart';
-import 'package:movies_wallet/features/home/data/repos/home_repo/home_repo_imp.dart';
+
 
 import '../../now_in_theaters/now_in_theaters_movies_cubit.dart';
 import '../../popular/cubit/popular_cubit.dart';
@@ -13,11 +12,11 @@ class MovieCubit extends Cubit<MovieState> {
   MovieCubit() : super(MovieInitial());
 
   final NowInTheatersMovieCubit _nowInTheatersMovieCubit =
-      NowInTheatersMovieCubit(getIt.get<HomeRepoImpl>());
+      NowInTheatersMovieCubit();
   final PopularMoviesCubit _popularCubit =
-      PopularMoviesCubit(getIt.get<HomeRepoImpl>());
+      PopularMoviesCubit();
   final TrendingMoviesCubit _trendingCubit =
-      TrendingMoviesCubit(getIt.get<HomeRepoImpl>());
+      TrendingMoviesCubit();
 
   void getMoviesData() async {
     emit(MovieLoading());

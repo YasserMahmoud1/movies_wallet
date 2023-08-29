@@ -48,36 +48,35 @@ class ActorDetails extends StatelessWidget {
 class ActorDetailsMovies extends StatelessWidget {
   const ActorDetailsMovies(
     this.actorID, {
-    super.key, 
+    super.key,
   });
   final int actorID;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ActorDetailsCubit(getIt.get<ActorRepoImpl>())..getActorMovies(actorID),
+      create: (context) => ActorDetailsCubit(getIt.get<ActorRepoImpl>())
+        ..getActorMovies(actorID),
       child: BlocBuilder<ActorDetailsCubit, ActorDetailsState>(
-      builder: (context, state) {
-        if (state is ActorDetailsSuccess)
-        {
-          return Column(
-            crossAxisAlignment:           CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    start: 16, end: 16, top: 32, bottom: 16),
-                child: Text("Movies of the actor:",
-                    style: Theme.of(context).textTheme.headlineMedium),
-              ),
-              for (int i = 0; i < state.movies.length; i++)
-                MovieTile(state.movies[i])
-            ],
-          );
-        }
-        else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-    ),
+        builder: (context, state) {
+          if (state is ActorDetailsSuccess) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 16, end: 16, top: 32, bottom: 16),
+                  child: Text("Movies of the actor:",
+                      style: Theme.of(context).textTheme.headlineMedium),
+                ),
+                for (int i = 0; i < state.movies.length; i++)
+                  MovieTile(state.movies[i], isSaved: false)
+              ],
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }

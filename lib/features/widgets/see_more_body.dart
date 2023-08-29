@@ -26,7 +26,7 @@ class SeeMoreBody extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: state.model.movie.length,
                   itemBuilder: (context, index) {
-                    return MovieTile(state.model.movie[index]);
+                    return MovieTile(state.model.movie[index], isSaved: false);
                   },
                 ),
                 const SeeMorePageNavigator()

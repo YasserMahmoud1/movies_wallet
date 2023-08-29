@@ -47,7 +47,7 @@ class MovieDetailsRepoImpl implements MovieDetailsRepo {
           return Right(response["results"][i]["key"]);
         }
       }
-      return Right("tPEE9ZwTmy0");
+      return Right("NO TRAILER");
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

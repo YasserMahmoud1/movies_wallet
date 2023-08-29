@@ -18,7 +18,11 @@ class MovieDetailsMoviePoster extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(ConstManager.universalBorderRadius),
         image: DecorationImage(
-          image: CachedNetworkImageProvider("${ConstManager.posterURlPrefix}$poster"),
+          image: CachedNetworkImageProvider(
+            poster == ''
+                ? ConstManager.placeHolderPosterURL
+                : "${ConstManager.posterURlPrefix}$poster",
+          ),
         ),
       ),
     );

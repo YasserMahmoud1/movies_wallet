@@ -68,7 +68,7 @@ class SavedRepoImpl implements SavedRepo {
       ) VALUES(
         ${movie.id},
         "${movie.title}",
-        "${movie.overview}",
+        "${movie.overview.replaceAll("\"", "\'")}",
         "${movie.posterPath}",
         "${movie.backdropPath}",
         ${movie.voteAverage},
