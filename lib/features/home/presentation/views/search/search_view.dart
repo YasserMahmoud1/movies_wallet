@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_wallet/core/utils/service_locator.dart';
 import 'package:movies_wallet/features/home/data/repos/search_repo/search_repo_impl.dart';
-// import 'package:movies_wallet/manager.dart';
 
 import '../../../../../manager.dart';
 import '../../../../widgets/movie_tile_widget.dart';
@@ -28,10 +27,10 @@ class SearchView extends StatelessWidget {
                 [
                   const SearchField(),
                   const Segment(),
-                  const ResultList(),
                 ],
               ),
             ),
+            const ResultList(),
           ],
         ),
       ),
@@ -50,35 +49,52 @@ class ResultList extends StatelessWidget {
       builder: (context, state) {
         if (state is SearchSuccess) {
           if (state.movies.isNotEmpty) {
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.movies.length,
-              itemBuilder: (context, index) {
-                return MovieTile(state.movies[index], isSaved: false);
-              },
+            return SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.movies.length,
+                    itemBuilder: (context, index) {
+                      return MovieTile(state.movies[index], isSaved: false);
+                    },
+                  ),
+                ],
+              ),
             );
           } else {
-            return const Center(child: Text("No results found"));
+            return const SliverFillRemaining(
+                child: Center(child: Text("No results found")));
           }
         } else if (state is SearchActorSuccess) {
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: state.actors.length,
-            itemBuilder: (context, index) {
-              return ActorTile(state.actors[index], isSaved: false);
-            },
+          return SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.actors.length,
+                  itemBuilder: (context, index) {
+                    return ActorTile(state.actors[index], isSaved: false);
+                  },
+                ),
+              ],
+            ),
           );
         } else if (state is SearchActorLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()));
         } else if (state is SearchLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()));
         } else if (state is SearchFailure) {
           print(state.message);
-          return const Center(child: Text("Something went wrong"));
+          return const SliverFillRemaining(
+              child: Center(child: Text("Something went wrong")));
         } else {
-          return const Center(child: Text("Search for a movie or a person"));
+          return const SliverFillRemaining(
+              child: Center(child: Text("Search for a movie or a person")));
         }
       },
     );

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../views/movies/movies_view.dart';
 import '../../views/saved/saved_view.dart';
@@ -17,6 +18,8 @@ class HomeCubit extends Cubit<HomeStates> {
     const SearchView(),
     const SavedView(),
   ];
+
+
 
   static int currentIndex = 0;
 

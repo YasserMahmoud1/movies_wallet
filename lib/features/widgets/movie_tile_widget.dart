@@ -15,7 +15,6 @@ import '../movie_details/data/models/movie_model.dart';
 import 'rating_widget.dart';
 
 class MovieTile extends StatelessWidget {
-
   const MovieTile(
     this._movie, {
     super.key,
@@ -89,13 +88,12 @@ class MovieTile extends StatelessWidget {
                             color: ColorManager.whites.withOpacity(.75),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
                             Rating(_movie.voteAverage),
                             const Spacer(),
-                            if(isSaved)
-                            MovieTileIconButton(_movie),
+                            if (isSaved) MovieTileIconButton(_movie),
                           ],
                         ),
                       ],
@@ -110,8 +108,8 @@ class MovieTile extends StatelessWidget {
     );
   }
 }
-class ActorTile extends StatelessWidget {
 
+class ActorTile extends StatelessWidget {
   const ActorTile(
     this._actor, {
     super.key,
@@ -176,7 +174,6 @@ class ActorTile extends StatelessWidget {
                             maxLines: 1,
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -206,14 +203,9 @@ class MovieTileIconButton extends StatelessWidget {
           if (state is IsSavedSuccess) {
             return IconButton(
               onPressed: () {
-                if (state.isSaved) {
-                  SavedCubit.get(context).deleteMovie(movie.id);
-                } else {
-                  SavedCubit.get(context).saveMovie(movie);
-                }
-                IsSavedCubit.get(context).isSaved(movie.id);
+                SavedCubit.get(context).deleteMovie(movie.id);
               },
-              icon: Icon(state.isSaved ? Icons.bookmark : Icons.bookmark_border,
+              icon: const Icon(Icons.bookmark,
                   color: ColorManager.blues, size: 32),
             );
           } else {

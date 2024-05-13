@@ -21,53 +21,56 @@ class MovieDetailsMovieCard extends StatelessWidget {
       onTap: () {
         goToMovieDetails(context, movie);
       },
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: ConstManager.movieDetailsMovieCardHeight,
-                width: ConstManager.movieDetailsMovieCardWidth,
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(ConstManager.universalBorderRadius),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      movie.posterPath == ''
-                          ? ConstManager.placeHolderPosterURL
-                          : "${ConstManager.posterURlPrefix}${movie.posterPath}",
+      child: SizedBox(
+        height: 150,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: ConstManager.movieDetailsMovieCardHeight,
+                  width: ConstManager.movieDetailsMovieCardWidth,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(ConstManager.universalBorderRadius),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        movie.posterPath == ''
+                            ? ConstManager.placeHolderPosterURL
+                            : "${ConstManager.posterURlPrefix}${movie.posterPath}",
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.all(ConstManager.universalPadding4),
-                    child: Rating(movie.voteAverage),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.all(ConstManager.universalPadding4),
+                      child: Rating(movie.voteAverage),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(
-                top: ConstManager.universalPadding8,
-                bottom: ConstManager.universalPadding4),
-            child: SizedBox(
-              width: ConstManager.movieDetailsMovieCardWidth,
-              child: Text(
-                movie.title,
-                style: Theme.of(context).textTheme.bodyLarge,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
+                  top: ConstManager.universalPadding8,
+                  bottom: ConstManager.universalPadding4),
+              child: SizedBox(
+                width: ConstManager.movieDetailsMovieCardWidth,
+                child: Text(
+                  movie.title,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -125,6 +128,7 @@ class MovieDetailsActorCard extends StatelessWidget {
           child: Text(
             "(${actor.character})",
             style: Theme.of(context).textTheme.bodyMedium,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             maxLines: 1,
           ),

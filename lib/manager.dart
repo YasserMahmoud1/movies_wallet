@@ -71,7 +71,7 @@ class ConstManager {
   static const double movieDetailsPosterHeight = 225;
   static const double movieDetailsPosterWidth = 150;
   static const double movieDetailsCardOpacity = 0.5;
-  static const double movieDetailsMovieCardHeight = 187.5;
+  static const double movieDetailsMovieCardHeight = 186;
 
   static const double movieDetailsMovieCardWidth = 125;
 }

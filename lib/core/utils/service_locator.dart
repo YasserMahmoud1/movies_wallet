@@ -16,24 +16,22 @@ void setup() {
   getIt.registerSingleton<ApiService>(ApiService(Dio()));
   getIt.registerSingleton<DatabaseService>(DatabaseService());
 
-  getIt.registerFactory<HomeRepoImpl>(
+  getIt.registerLazySingleton<HomeRepoImpl>(
     () => HomeRepoImpl(getIt.get<ApiService>()),
   );
-  getIt.registerFactory<SearchRepoImpl>(
+  getIt.registerLazySingleton<SearchRepoImpl>(
     () => SearchRepoImpl(getIt.get<ApiService>()),
   );
-  getIt.registerFactory<SeeMoreRepoImpl>(
+  getIt.registerLazySingleton<SeeMoreRepoImpl>(
     () => SeeMoreRepoImpl(getIt.get<ApiService>()),
   );
-  getIt.registerFactory<MovieDetailsRepoImpl>(
+  getIt.registerLazySingleton<MovieDetailsRepoImpl>(
     () => MovieDetailsRepoImpl(getIt.get<ApiService>()),
   );
-  getIt.registerFactory<ActorRepoImpl>(
+  getIt.registerLazySingleton<ActorRepoImpl>(
     () => ActorRepoImpl(getIt.get<ApiService>()),
   );
-  getIt.registerFactory<SavedRepoImpl>(
+  getIt.registerLazySingleton<SavedRepoImpl>(
     () => SavedRepoImpl(getIt.get<DatabaseService>()),
   );
 }
-
-

@@ -22,25 +22,36 @@ class ActorDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Actor Details'), centerTitle: true),
-      body: CustomScrollView(slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Column(
-                children: [
-                  ActorDetailsImage(imgURL: actor.profilePathID),
-                  Text(
-                    actor.name,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              ActorDetailsMovies(actor.id),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Column(
+                  children: [
+                    ActorDetailsImage(imgURL: actor.profilePathID),
+                    Text(
+                      actor.name,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 16, end: 16, top: 32, bottom: 16),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Movies of the actor:",
+                            style: Theme.of(context).textTheme.headlineMedium),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+          ActorDetailsMovies(actor.id)
+        ],
+      ),
     );
   }
 }
@@ -59,21 +70,17 @@ class ActorDetailsMovies extends StatelessWidget {
       child: BlocBuilder<ActorDetailsCubit, ActorDetailsState>(
         builder: (context, state) {
           if (state is ActorDetailsSuccess) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      start: 16, end: 16, top: 32, bottom: 16),
-                  child: Text("Movies of the actor:",
-                      style: Theme.of(context).textTheme.headlineMedium),
+            return SliverList(
+              delegate: SliverChildListDelegate(
+                List.generate(
+                  state.movies.length,
+                  (index) => MovieTile(state.movies[index], isSaved: false),
                 ),
-                for (int i = 0; i < state.movies.length; i++)
-                  MovieTile(state.movies[i], isSaved: false)
-              ],
+              ),
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const SliverFillRemaining(
+                child: Center(child: CircularProgressIndicator()));
           }
         },
       ),
